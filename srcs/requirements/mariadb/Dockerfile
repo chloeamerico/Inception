@@ -7,11 +7,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /run/mysqld /var/lib/mysql
 
-COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY tools/mariadb.sh /usr/local/bin/mariadb.sh
+COPY tools/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY tools/script.sh /usr/local/bin/script.sh
 
-RUN chmod +x /usr/local/bin/mariadb.sh
+RUN chmod +x /usr/local/bin/script.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["/usr/local/bin/mariadb.sh"]
+ENTRYPOINT ["/usr/local/bin/script.sh"]
