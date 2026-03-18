@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+#on recuper les mdp
+#export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
+#export WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
+#export WP_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
+
 # dossier où seront stockes les fichiers runtime de PHP-FPM(php) puis WordPress (html)
 mkdir -p /run/php
 mkdir -p /var/www/html

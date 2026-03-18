@@ -23,7 +23,7 @@ until mysqladmin --socket=/run/mysqld/mysqld.sock ping --silent 2>/dev/null; do
 done
 
 # on envoit un lot de commandes SQL (de config) au serveur tmp de Mariadb
-mysql --socket=/run/mysqld/mysqld.sock << EOF
+mysql --protocol=socket --socket=/run/mysqld/mysqld.sock -u root << EOF
 -- supp les user anonymes/sans noms 
 DELETE FROM mysql.user WHERE User='';
 
@@ -46,7 +46,7 @@ FLUSH PRIVILEGES;
 EOF
 
 # arret propre du serveur tmp de MDB - en s'identifiant - et on attend que le serveur MDB lance en arriere plan soit termine
-mysqladmin --socket=/run/mysqld/mysqld.sock -p"${MYSQL_ROOT_PASSWORD}" shutdown
+mysqladmin --protocol=socket --socket=/run/mysqld/mysqld.sock -u root -p"${MYSQL_ROOT_PASSWORD}" shutdown
 wait $MYSQL_PID
 
 # relande MariaDB en process principal (plus en arriere plan)

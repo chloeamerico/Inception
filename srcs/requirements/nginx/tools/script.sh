@@ -1,11 +1,6 @@
 #!/bin/bash
 set -e
 
-# on recup les 3 secrets / mdp
-export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
-export WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
-export WP_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
-
 #   on cree le dossier pour stocker le certificat SSL s'il n'existe pas encore.
 mkdir -p /etc/nginx/ssl
 
@@ -17,7 +12,7 @@ mkdir -p /etc/nginx/ssl
 openssl req -x509 -nodes -days 365 \
     -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/inception.key \
-    -out /etc/nginx/ssl/inception.crt \ 
+    -out /etc/nginx/ssl/inception.crt \
     -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=${DOMAIN_NAME}"
 
 #   on demarre nginx comme processus principal,(PID 1)
