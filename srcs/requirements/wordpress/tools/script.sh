@@ -55,6 +55,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 		--user_pass="${WP_USER_PASSWORD}" \
 		--role=author
 
+	# chown pour changer le propriétaire et/ou le groupe
 	chown -R www-data:www-data /var/www/html
 fi
 
