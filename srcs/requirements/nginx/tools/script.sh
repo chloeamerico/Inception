@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# on recup les 3 secrets / mdp
+export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
+export WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
+export WP_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
+
 #   on cree le dossier pour stocker le certificat SSL s'il n'existe pas encore.
 mkdir -p /etc/nginx/ssl
 
@@ -17,5 +22,7 @@ openssl req -x509 -nodes -days 365 \
 
 #   on demarre nginx comme processus principal,(PID 1)
 #   "daemon off" = pas en arriere plan 
+#   on remplace remplace ${DOMAIN_NAME} par le vrai nom de domaine car NGINX ne le remplace pas tout seul
 
-exec nginx -g "daemon off;"
+sed "s|\${DOMAIN_NAME}|${DOMAIN_NAME}|g" /etc/nginx/nginx.conf > /tmp/nginx.conf
+exec nginx -c /tmp/nginx.conf -g "daemon off;"
