@@ -35,7 +35,9 @@ CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 -- cree un user/ compte MDB ( avec le nom qui est dans MYSQL_USER) // '@'%' connection depuis n'importe quelle machine
 -- il a tous les droits sur cette base de donnees
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
+GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'localhost';
 
 -- on definit le mot de passe root
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
