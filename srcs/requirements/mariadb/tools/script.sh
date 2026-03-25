@@ -10,20 +10,19 @@ chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
 # est ce que Mariadb a deja ete initialise. si non --> on initialise/prepare les bases de donnees  
 if [ ! -d "/var/lib/mysql/mysql" ]; then
-    mysql_install_db --user=mysql --datadir=/var/lib/mysql > /dev/null
-fi
+	mysql_install_db --user=mysql --datadir=/var/lib/mysql > /dev/null
 
-# on demarre MariaDB temporairement poru pouvoir installer les commandes suivantes
-mysqld --user=mysql --skip-networking --socket=/run/mysqld/mysqld.sock &
-MYSQL_PID=$!
+    # on demarre MariaDB temporairement poru pouvoir installer les commandes suivantes
+	mysqld --user=mysql --skip-networking --socket=/run/mysqld/mysqld.sock &
+	MYSQL_PID=$!
 
-# on attend que Mdb ait termine son initialisation interne pour recevoir des connections 
-until mysqladmin --socket=/run/mysqld/mysqld.sock ping --silent 2>/dev/null; do
-    sleep 1
-done
+	until mysqladmin --socket=/run/mysqld/mysqld.sock ping --silent 2>/dev/null; do
+		sleep 1
+	done
 
-# on envoit un lot de commandes SQL (de config) au serveur tmp de Mariadb
-mysql --protocol=socket --socket=/run/mysqld/mysqld.sock -u root << EOF
+    # on envoit un lot de commandes SQL (de config) au serveur tmp de Mariadb
+	mysql --protocol=socket --socket=/run/mysqld/mysqld.sock -u root << EOF
+
 -- supp les user anonymes/sans noms 
 DELETE FROM mysql.user WHERE User='';
 
@@ -45,9 +44,10 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
 FLUSH PRIVILEGES;
 EOF
 
-# arret propre du serveur tmp de MDB - en s'identifiant - et on attend que le serveur MDB lance en arriere plan soit termine
-mysqladmin --protocol=socket --socket=/run/mysqld/mysqld.sock -u root -p"${MYSQL_ROOT_PASSWORD}" shutdown
-wait $MYSQL_PID
+    # arret propre du serveur tmp de MDB - en s'identifiant - et on attend que le serveur MDB lance en arriere plan soit termine
+	mysqladmin --protocol=socket --socket=/run/mysqld/mysqld.sock -u root -p"${MYSQL_ROOT_PASSWORD}" shutdown
+	wait $MYSQL_PID
+fi
 
 # relande MariaDB en process principal (plus en arriere plan)
 exec mysqld --user=mysql

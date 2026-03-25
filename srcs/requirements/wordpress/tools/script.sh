@@ -2,9 +2,9 @@
 set -e
 
 #on recuper les mdp
-#export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
-#export WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
-#export WP_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
+export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
+export WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
+export WP_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
 
 # dossier où seront stockes les fichiers runtime de PHP-FPM(php) puis WordPress (html)
 mkdir -p /run/php
@@ -14,9 +14,9 @@ mkdir -p /var/www/html
 # telecharger WP-CLI que si il n'existe pas deja dans le conteneur
 # WP-CLI = WordPress Command Line Interface --> outil pr piloter WordPress via terminal au lieu de passer par l’interface web d’administration
 if [ ! -f /usr/local/bin/wp ]; then
-	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-	chmod +x wp-cli.phar
-	mv wp-cli.phar /usr/local/bin/wp
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    mv wp-cli.phar /usr/local/bin/wp
 fi
 
 chown -R www-data:www-data /var/www/html
@@ -33,7 +33,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     cd /var/www/html
 
     # on y telecharge les fichiers du coeur WordPress
-	wp core download --allow-root
+	wp core download --allow-root --force
 
     # on cree le fichier ​qui contient les infos de connexion a la base de donnees
 	wp config create \
