@@ -36,11 +36,14 @@ CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 -- il a tous les droits sur cette base de donnees
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';
+
+
 GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
 GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'localhost';
 
 -- on definit le mot de passe root
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+
 
 -- on charge tous les privileges pour qu'ils soient pris en compte
 FLUSH PRIVILEGES;

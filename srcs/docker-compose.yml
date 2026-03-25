@@ -47,7 +47,17 @@ services:
 
 volumes:
   db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/camerico/data/db
   wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/camerico/data/wordpress
 
 networks:
   inception:
