@@ -38,12 +38,16 @@ ps:
 clean:
 	$(COMPOSE) down -v
 
+purge: fclean
+	sudo rm -rf /home/camerico/data/db
+	sudo rm -rf /home/camerico/data/wordpress
+
 #	supprime conteneurs, volumes, images Docker construites pour le projet (--rmi all)
 fclean:
 	$(COMPOSE) down -v --rmi all
 
 #	comme restart mais plus fort
 #	make re = reset complet du projet
-re: fclean all
+re: purge all
 
 .PHONY: all up down start stop restart logs ps clean fclean re
