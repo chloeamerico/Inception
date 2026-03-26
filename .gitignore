@@ -1,0 +1,21 @@
+# Secrets - ne JAMAIS pusher les mots de passe
+secrets/
+srcs/secrets/
+
+# Variables d'environnement
+srcs/.env
+.env
+
+# Données des volumes (générées au runtime)
+/home/*/data/
+
+# Fichiers système macOS
+.DS_Store
+
+# Fichiers système Linux
+*~
+*.swp
+*.swo
+
+# Logs
+*.log
