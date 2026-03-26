@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eu
 
 #on recuper les mdp
 export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
