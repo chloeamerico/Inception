@@ -19,50 +19,52 @@ if [ ! -f /usr/local/bin/wp ]; then
     mv wp-cli.phar /usr/local/bin/wp
 fi
 
-chown -R www-data:www-data /var/www/html
+cd /var/www/html
 
-# essaye en boucle jusqu'a ce que Mariadb reponde avec les identifiants
-until mysqladmin ping -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" --silent; do
-	sleep 2
+# ÉTAPE CRUCIALE : Attendre que MariaDB soit prêt ET accepte l'utilisateur
+# On redirige les erreurs vers /dev/null pour ne pas polluer les logs avec l'erreur 1130 pendant l'attente
+echo "Attente de MariaDB (${MYSQL_HOST})..."
+until mysqladmin ping -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" --silent > /dev/null 2>&1; do
+    sleep 2
 done
+echo "MariaDB est prêt !"
 
 # si premier lancement --> on installe et configure Wordpress
 if [ ! -f /var/www/html/wp-config.php ]; then
-	
-    # /var/www/html = dossier du site WordPress
-    cd /var/www/html
 
     # on y telecharge les fichiers du coeur WordPress
 	wp core download --allow-root --force
 
     # on cree le fichier ​qui contient les infos de connexion a la base de donnees
-	wp config create \
-		--allow-root \
-		--dbname="${MYSQL_DATABASE}" \
-		--dbuser="${MYSQL_USER}" \
-		--dbpass="${MYSQL_PASSWORD}" \
-		--dbhost="${MYSQL_HOST}" \
-		--path='/var/www/html'
+    wp config create \
+        --allow-root \
+        --dbname="${MYSQL_DATABASE}" \
+        --dbuser="${MYSQL_USER}" \
+        --dbpass="${MYSQL_PASSWORD}" \
+        --dbhost="${MYSQL_HOST}" \
+        --path='/var/www/html'
 
     # installation du site WP
 	wp core install \
-		--allow-root \
-		--url="${DOMAIN_NAME}" \
-		--title="${WP_TITLE}" \
-		--admin_user="${WP_ADMIN_USER}" \
-		--admin_password="${WP_ADMIN_PASSWORD}" \
-		--admin_email="${WP_ADMIN_EMAIL}" \
-		--skip-email
+        --allow-root \
+        --url="${DOMAIN_NAME}" \
+        --title="${WP_TITLE}" \
+        --admin_user="${WP_ADMIN_USER}" \
+        --admin_password="${WP_ADMIN_PASSWORD}" \
+        --admin_email="${WP_ADMIN_EMAIL}" \
+        --skip-email
 
     # creation du second utilisateur ( comme demande dans le sujet), on lui donne le role d'auteur
 	wp user create "${WP_USER}" "${WP_USER_EMAIL}" \
-		--allow-root \
-		--user_pass="${WP_USER_PASSWORD}" \
-		--role=author
+        --allow-root \
+        --user_pass="${WP_USER_PASSWORD}" \
+        --role=author
 
 	# chown pour changer le propriétaire et/ou le groupe
 	chown -R www-data:www-data /var/www/html
 fi
+
+echo "WordPress est prêt à servir des requêtes."
 
 # lance PHP-FPM en avant-plan
 exec /usr/sbin/php-fpm7.4 -F
