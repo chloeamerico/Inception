@@ -1,53 +1,68 @@
+NAME = inception
+
+.DEFAULT_GOAL := all
+
+
+# Docker Compose
+ENV_FILE = ./srcs/.env
+COMPOSE_FILE = ./srcs/docker-compose.yml
+DOCKER_COMPOSE = docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
+
 COMPOSE = docker compose -f srcs/docker-compose.yml
 
-#	s'execute quand on fait make
-#	cree les 2 dossiers necessaires (que si ils n'existent pas -p)
-#	--build rebuild les images si necessaire avant de lancer les conteneurs
-all:
-	mkdir -p /home/camerico/data/db /home/camerico/data/wordpress
-	$(COMPOSE) up -d --build
+LOGIN ?= $(shell id -un)
+DATA_DIR = /home/$(LOGIN)/data
 
-up:
-	mkdir -p /home/camerico/data/db /home/camerico/data/wordpress
-	$(COMPOSE) up -d --build
+prepare:
+	@mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
 
-#	pour arreter le projet
-down:
-	$(COMPOSE) down
+all: up
+
+build: prepare
+	@echo "$(GREEN)Building containers...$(RESET)"
+	$(DOCKER_COMPOSE) build
+
+
+up: build
+	$(DOCKER_COMPOSE) up -d
+
+#	ca arrete les conteneurs sans les supprimer
+stop:
+	$(COMPOSE) stop
 
 #	redemarre des conteneurs deje existants qui sont arretes
 #	attention : ca ne rebuild pas, ne recre pas, ca relance juste ce qui existe deja
 start:
 	$(COMPOSE) start
 
-#	ca arrete les conteneurs sans les supprimer
-stop:
-	$(COMPOSE) stop
 
 restart: stop start
 
-#	affiche les logs de tous les services, (WordPress, MariaDB, NGINX),  utile pour voir ce qui crash
+
+clean: down
+	@echo "$(RED)Removing containers, networks, and volumes...$(RESET)"
+	$(DOCKER_COMPOSE) down -v --rmi all --remove-orphans
+
+
+fclean: clean
+	@docker system prune -a -f --volumes
+	@sudo rm -rf $(DATA_DIR)/db $(DATA_DIR)/wordpress
+	@mkdir -p $(DATA_DIR)/db $(DATA_DIR)/wordpress
+
+down:
+	$(DOCKER_COMPOSE) down
+
+re: fclean all
+
 logs:
-	$(COMPOSE) logs
+	$(DOCKER_COMPOSE) logs
 
-#	affiche l’etat des conteneurs : en cours d’execution, arretes, port expose, etc...
 ps:
-	$(COMPOSE) ps
+	$(DOCKER_COMPOSE) ps
 
-#	supprime les conteneurs , volumes utilises par Compose (-v), 
-clean:
-	$(COMPOSE) down -v
+config:
+	$(DOCKER_COMPOSE) config
 
-purge: fclean
-	sudo rm -rf /home/camerico/data/db
-	sudo rm -rf /home/camerico/data/wordpress
+status: ps
 
-#	supprime conteneurs, volumes, images Docker construites pour le projet (--rmi all)
-fclean:
-	$(COMPOSE) down -v --rmi all
-
-#	comme restart mais plus fort
-#	make re = reset complet du projet
-re: purge all
-
-.PHONY: all up down start stop restart logs ps clean fclean re
+.PHONY: all prepare build up down stop start restart clean fclean re logs ps config status

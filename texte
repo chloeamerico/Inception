@@ -1,0 +1,814 @@
+j'ai un pb , avec mon projet inception
+
+voici ce qui tourne en boucle :
+
+ make re
+Removing containers, networks, and volumes...
+docker compose --env-file ./srcs/.env -f ./srcs/docker-compose.yml down -v --rmi all --remove-orphans
+[+] down 9/9
+ ✔ Container nginx        Removed                                                                                                                                                                                                     0.3s
+ ✔ Container wordpress    Removed                                                                                                                                                                                                     1.9s
+ ✔ Container mariadb      Removed                                                                                                                                                                                                     0.5s
+ ✔ Image mariadb:42       Removed                                                                                                                                                                                                     0.4s
+ ✔ Image wordpress:42     Removed                                                                                                                                                                                                     0.4s
+ ✔ Image nginx:42         Removed                                                                                                                                                                                                     0.4s
+ ✔ Volume srcs_wordpress  Removed                                                                                                                                                                                                     0.0s
+ ✔ Network srcs_inception Removed                                                                                                                                                                                                     0.2s
+ ✔ Volume srcs_db         Removed                                                                                                                                                                                                     0.0s
+Removing all Docker resources...
+Deleted build cache objects:
+p5n3ltao1voikzxlhcnj9yp4r
+3eh78nedsmetomvrhpgpasn7y
+sgaeisu1iesecnqn397a1nr86
+n1ij2in791lg4mgio61zf4y9t
+alqnl1ygxzb25eup96i2tje2y
+ekbppuxcbqge6ftg76cwliqfj
+o6b4gkk1vswfr0q8wiuv7gt97
+qw4v5y3jimctli4nhprdpyepe
+r8qme7o76zxvbc34hsj0lok5k
+g10ellsziugwhs92fgpgt18p9
+gwifngcsm8onauibshcf2q61t
+oj6kk3v416aw79q33svqgyshl
+rb2spgd19oms4a3cdg028cqrw
+0emf3xbam84a75xtkrnfkp08g
+nn6xjco5dowjltk6j66kjginn
+cgr2v7le3nfyz6hotlccxtabw
+ahx8tuwjayll9ngkktqs6nrlw
+ns0p45lme9bhb3atg25xmdwkg
+mdn0q06lamx6a88a97d98hky6
+1in33h72oa4aoqkkrz1b9tvz2
+la56n1y2kflcd73tsyl5i79nw
+ob6w2qc7h4l3m8dqx05dph4xq
+
+Total reclaimed space: 963.4MB
+Building containers...
+docker compose --env-file ./srcs/.env -f ./srcs/docker-compose.yml build
+[+] Building 36.7s (30/30) FINISHED                                                                                                                                                                                                       
+ => [internal] load local bake definitions                                                                                                                                                                                           0.0s
+ => => reading from stdin 1.55kB                                                                                                                                                                                                     0.0s
+ => [wordpress internal] load build definition from Dockerfile                                                                                                                                                                       0.1s
+ => => transferring dockerfile: 675B                                                                                                                                                                                                 0.0s
+ => [mariadb internal] load build definition from Dockerfile                                                                                                                                                                         0.1s
+ => => transferring dockerfile: 464B                                                                                                                                                                                                 0.0s
+ => [nginx internal] load build definition from Dockerfile                                                                                                                                                                           0.1s
+ => => transferring dockerfile: 413B                                                                                                                                                                                                 0.0s
+ => [mariadb internal] load metadata for docker.io/library/debian:bullseye                                                                                                                                                           0.8s
+ => [nginx internal] load .dockerignore                                                                                                                                                                                              0.1s
+ => => transferring context: 34B                                                                                                                                                                                                     0.0s
+ => [wordpress internal] load .dockerignore                                                                                                                                                                                          0.1s
+ => => transferring context: 2B                                                                                                                                                                                                      0.0s
+ => [mariadb internal] load .dockerignore                                                                                                                                                                                            0.1s
+ => => transferring context: 34B                                                                                                                                                                                                     0.0s
+ => [mariadb 1/5] FROM docker.io/library/debian:bullseye@sha256:943d97fa707482c24e1bc2bdd0b0adc45f75eb345c61dc4272c4157f9a2cc9cc                                                                                                     2.0s
+ => => resolve docker.io/library/debian:bullseye@sha256:943d97fa707482c24e1bc2bdd0b0adc45f75eb345c61dc4272c4157f9a2cc9cc                                                                                                             0.0s
+ => => sha256:e759575b5b0029fea51256b7ad3afa90c8ff1a6a9457787359c2b05b4a964edd 53.76MB / 53.76MB                                                                                                                                     1.0s
+ => => extracting sha256:e759575b5b0029fea51256b7ad3afa90c8ff1a6a9457787359c2b05b4a964edd                                                                                                                                            0.8s
+ => [mariadb internal] load build context                                                                                                                                                                                            0.1s
+ => => transferring context: 2.25kB                                                                                                                                                                                                  0.0s
+ => [nginx internal] load build context                                                                                                                                                                                              0.1s
+ => => transferring context: 3.33kB                                                                                                                                                                                                  0.0s
+ => [wordpress internal] load build context                                                                                                                                                                                          0.1s
+ => => transferring context: 2.83kB                                                                                                                                                                                                  0.0s
+ => [mariadb 2/5] RUN apt-get update     && apt-get install -y mariadb-server     && apt-get clean     && rm -rf /var/lib/apt/lists/*     && mkdir -p /run/mysqld /var/lib/mysql                                                    15.4s
+ => [wordpress 2/5] RUN apt-get update     && apt-get install -y         php7.4-fpm         php7.4-mysql         php7.4-gd         php7.4-curl         php7.4-mbstring         php7.4-xml         php7.4-zip         curl           24.9s
+ => [nginx 2/5] RUN apt-get update     && apt-get install -y nginx openssl     && apt-get clean     && rm -rf /var/lib/apt/lists/*     && mkdir -p /etc/nginx/ssl /var/run/nginx                                                    10.7s
+ => [nginx 3/5] COPY tools/nginx.conf /etc/nginx/nginx.conf                                                                                                                                                                          0.2s
+ => [nginx 4/5] COPY tools/script.sh /usr/local/bin/script.sh                                                                                                                                                                        0.1s
+ => [nginx 5/5] RUN chmod +x /usr/local/bin/script.sh                                                                                                                                                                                1.3s
+ => [nginx] exporting to image                                                                                                                                                                                                       4.4s
+ => => exporting layers                                                                                                                                                                                                              3.5s
+ => => exporting manifest sha256:ed8352813bb838e82eec4915495ddf37ab20515ea1ec1e1a78e4dc68f9feb4e5                                                                                                                                    0.0s
+ => => exporting config sha256:7fccd50206edffcdc875360f8c0a2640c3ef8c14d164de496c3c2d32eedd7946                                                                                                                                      0.0s
+ => => exporting attestation manifest sha256:3a79b938cec65e2f4533012fa30a44f6f5da7acfd4ae267cc0c09a0d9162b330                                                                                                                        0.1s
+ => => exporting manifest list sha256:36792662df19ea77e59f055d4e4a20468719a1257ef478e0715dc9ec715cc2be                                                                                                                               0.0s
+ => => naming to docker.io/library/nginx:42                                                                                                                                                                                          0.0s
+ => => unpacking to docker.io/library/nginx:42                                                                                                                                                                                       0.6s
+ => [mariadb 3/5] COPY tools/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf                                                                                                                                                   0.1s
+ => [mariadb 4/5] COPY tools/script.sh /usr/local/bin/script.sh                                                                                                                                                                      0.1s
+ => [mariadb 5/5] RUN chmod +x /usr/local/bin/script.sh                                                                                                                                                                              0.3s
+ => [mariadb] exporting to image                                                                                                                                                                                                     9.9s
+ => => exporting layers                                                                                                                                                                                                              8.0s
+ => => exporting manifest sha256:f3fa1f59364adc8a81ae8e57c3926e2af446fab3d6d3e24c894e4f55afe3e638                                                                                                                                    0.0s
+ => => exporting config sha256:6af9fc49eb5be85b205eab8d042584dd2a893f694d02d031906abcf72e3035d8                                                                                                                                      0.0s
+ => => exporting attestation manifest sha256:4785ec7a57d4b6972941a78d1c554b59e08e82c4d2399e4480a5f5d14eb9891b                                                                                                                        0.0s
+ => => exporting manifest list sha256:ae73328decbf4ba521b294344fc31c38a807e6a3e3b4ab4f3f2b2f5269807300                                                                                                                               0.0s
+ => => naming to docker.io/library/mariadb:42                                                                                                                                                                                        0.0s
+ => => unpacking to docker.io/library/mariadb:42                                                                                                                                                                                     1.8s
+ => [nginx] resolving provenance for metadata file                                                                                                                                                                                   0.0s
+ => [wordpress 3/5] COPY tools/www.conf /etc/php/7.4/fpm/pool.d/www.conf                                                                                                                                                             0.1s
+ => [wordpress 4/5] COPY tools/script.sh /usr/local/bin/script.sh                                                                                                                                                                    0.1s
+ => [wordpress 5/5] RUN chmod +x /usr/local/bin/script.sh     && chown -R www-data:www-data /var/www/html                                                                                                                            0.3s
+ => [wordpress] exporting to image                                                                                                                                                                                                   8.0s
+ => => exporting layers                                                                                                                                                                                                              6.7s
+ => => exporting manifest sha256:b136ca86982d14713117c3f0892a51c6f0280e0ac2feb2eb9f09401a555a7f6d                                                                                                                                    0.0s
+ => => exporting config sha256:f055ddc9ab6af888cce59481342d03f1f8db50725d3668851f80d67caab52a4f                                                                                                                                      0.0s
+ => => exporting attestation manifest sha256:882761c46b0fce60d7dfef2c1463c85c7b7cd42d67cd9b7409c084ec77e8d839                                                                                                                        0.0s
+ => => exporting manifest list sha256:003cb5b6219f403e83f6d3a66b1c8abd45f439d15d86b519248087c5bf7f2712                                                                                                                               0.0s
+ => => naming to docker.io/library/wordpress:42                                                                                                                                                                                      0.0s
+ => => unpacking to docker.io/library/wordpress:42                                                                                                                                                                                   1.0s
+ => [mariadb] resolving provenance for metadata file                                                                                                                                                                                 0.0s
+ => [wordpress] resolving provenance for metadata file                                                                                                                                                                               0.0s
+[+] build 3/3
+ ✔ Image wordpress:42 Built                                                                                                                                                                                                          36.8s
+ ✔ Image nginx:42     Built                                                                                                                                                                                                          36.8s
+ ✔ Image mariadb:42   Built                                                                                                                                                                                                          36.8s
+docker compose --env-file ./srcs/.env -f ./srcs/docker-compose.yml up -d
+[+] up 6/6
+ ✔ Network srcs_inception Created                                                                                                                                                                                                     0.0s
+ ✔ Volume srcs_wordpress  Created                                                                                                                                                                                                     0.0s
+ ✔ Volume srcs_db         Created                                                                                                                                                                                                     0.0s
+ ✔ Container mariadb      Started                                                                                                                                                                                                     1.0s
+ ✔ Container wordpress    Started                                                                                                                                                                                                     0.9s
+ ✔ Container nginx        Started                                                                                                                                                                                                     0.6s
+➜  old_inception git:(main) ✗ make ps
+docker compose --env-file ./srcs/.env -f ./srcs/docker-compose.yml ps
+NAME        IMAGE          COMMAND                  SERVICE     CREATED         STATUS         PORTS
+mariadb     mariadb:42     "/usr/local/bin/scri…"   mariadb     4 seconds ago   Up 3 seconds   3306/tcp
+nginx       nginx:42       "/usr/local/bin/scri…"   nginx       3 seconds ago   Up 2 seconds   0.0.0.0:443->443/tcp, [::]:443->443/tcp
+wordpress   wordpress:42   "/usr/local/bin/scri…"   wordpress   3 seconds ago   Up 3 seconds   9000/tcp
+➜  old_inception git:(main) ✗ make logs
+docker compose --env-file ./srcs/.env -f ./srcs/docker-compose.yml logs -f
+wordpress  |   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+wordpress  |                                  Dload  Upload   Total   Spent    Left  Speed
+100 6975k  100 6975k    0     0  73.2M      0 --:--:-- --:--:-- --:--:-- 73.2M
+wordpress  | Attente de MariaDB (mariadb)...
+wordpress  | MariaDB est prêt !
+wordpress  | Downloading WordPress 6.9.4 (en_US)...
+wordpress  | md5 hash verified: 9355f37ee9ec885c93e3ca87ba8538d4
+wordpress  | Success: WordPress downloaded.
+wordpress  | Error: Database connection error (1130) Host 'wordpress.srcs_inception' is not allowed to connect to this MariaDB server
+wordpress  | Attente de MariaDB (mariadb)...
+wordpress  | MariaDB est prêt !
+wordpress  | Downloading WordPress 6.9.4 (en_US)...
+wordpress  | Using cached file '/root/.wp-cli/cache/core/wordpress-6.9.4-en_US.tar.gz'...
+nginx      | Generating a RSA private key
+nginx      | .......................................+++++
+nginx      | ........+++++
+nginx      | writing new private key to '/etc/nginx/ssl/inception.key'
+nginx      | -----
+mariadb    | 2026-03-26 16:59:13 0 [Note] Starting MariaDB 10.5.29-MariaDB-0+deb11u1 source revision c461188ca6ad6ec3a54201eb87ebd75797d296df server_uid +DswymZnZlmXBx9bePFuxzbmgjQ= as process 1
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: Uses event mutexes
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: Number of pools: 1
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: Using Linux native AIO
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: Initializing buffer pool, total size = 134217728, chunk size = 134217728
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb    | 2026-03-26 16:59:13 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb    | 2026-03-26 16:59:14 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+mariadb    | 2026-03-26 16:59:14 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+mariadb    | 2026-03-26 16:59:14 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+mariadb    | 2026-03-26 16:59:14 0 [Note] InnoDB: 10.5.29 started; log sequence number 45115; transaction id 20
+mariadb    | 2026-03-26 16:59:14 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb    | 2026-03-26 16:59:14 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb    | 2026-03-26 16:59:14 0 [Note] InnoDB: Buffer pool(s) load completed at 260326 16:59:14
+mariadb    | 2026-03-26 16:59:14 0 [Note] Server socket created on IP: '0.0.0.0'.
+mariadb    | 2026-03-26 16:59:14 0 [Note] Reading of all Master_info entries succeeded
+mariadb    | 2026-03-26 16:59:14 0 [Note] Added new Master_info '' to hash table
+mariadb    | 2026-03-26 16:59:14 0 [Note] mysqld: ready for connections.
+mariadb    | Version: '10.5.29-MariaDB-0+deb11u1'  socket: '/run/mysqld/mysqld.sock'  port: 3306  Debian 11
+mariadb    | 2026-03-26 16:59:14 3 [Warning] Aborted connection 3 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+mariadb    | 2026-03-26 16:59:18 4 [Warning] Aborted connection 4 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+mariadb    | 2026-03-26 16:59:19 5 [Warning] Aborted connection 5 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | Success: WordPress downloaded.
+mariadb    | 2026-03-26 16:59:21 6 [Warning] Aborted connection 6 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | Error: Database connection error (1130) Host 'wordpress.srcs_inception' is not allowed to connect to this MariaDB server
+wordpress exited with code 1 (restarting)
+wordpress  | Attente de MariaDB (mariadb)...
+mariadb    | 2026-03-26 16:59:22 7 [Warning] Aborted connection 7 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | MariaDB est prêt !
+wordpress  | Downloading WordPress 6.9.4 (en_US)...
+wordpress  | Using cached file '/root/.wp-cli/cache/core/wordpress-6.9.4-en_US.tar.gz'...
+wordpress  | Success: WordPress downloaded.
+mariadb    | 2026-03-26 16:59:24 8 [Warning] Aborted connection 8 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | Error: Database connection error (1130) Host 'wordpress.srcs_inception' is not allowed to connect to this MariaDB server
+wordpress exited with code 1 (restarting)
+wordpress  | Attente de MariaDB (mariadb)...
+mariadb    | 2026-03-26 16:59:25 9 [Warning] Aborted connection 9 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | MariaDB est prêt !
+wordpress  | Downloading WordPress 6.9.4 (en_US)...
+wordpress  | Using cached file '/root/.wp-cli/cache/core/wordpress-6.9.4-en_US.tar.gz'...
+wordpress  | Success: WordPress downloaded.
+mariadb    | 2026-03-26 16:59:27 10 [Warning] Aborted connection 10 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | Error: Database connection error (1130) Host 'wordpress.srcs_inception' is not allowed to connect to this MariaDB server
+wordpress exited with code 1 (restarting)
+wordpress  | Attente de MariaDB (mariadb)...
+wordpress  | MariaDB est prêt !
+mariadb    | 2026-03-26 16:59:28 11 [Warning] Aborted connection 11 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | Downloading WordPress 6.9.4 (en_US)...
+wordpress  | Using cached file '/root/.wp-cli/cache/core/wordpress-6.9.4-en_US.tar.gz'...
+wordpress  | Success: WordPress downloaded.
+mariadb    | 2026-03-26 16:59:31 12 [Warning] Aborted connection 12 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | Error: Database connection error (1130) Host 'wordpress.srcs_inception' is not allowed to connect to this MariaDB server
+wordpress exited with code 1 (restarting)
+wordpress  | Attente de MariaDB (mariadb)...
+mariadb    | 2026-03-26 16:59:33 13 [Warning] Aborted connection 13 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | MariaDB est prêt !
+wordpress  | Downloading WordPress 6.9.4 (en_US)...
+wordpress  | Using cached file '/root/.wp-cli/cache/core/wordpress-6.9.4-en_US.tar.gz'...
+wordpress  | Success: WordPress downloaded.
+mariadb    | 2026-03-26 16:59:35 14 [Warning] Aborted connection 14 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | Error: Database connection error (1130) Host 'wordpress.srcs_inception' is not allowed to connect to this MariaDB server
+wordpress exited with code 1 (restarting)
+wordpress  | Attente de MariaDB (mariadb)...
+mariadb    | 2026-03-26 16:59:39 15 [Warning] Aborted connection 15 to db: 'unconnected' user: 'unauthenticated' host: 'wordpress.srcs_inception' (This connection closed normally without authentication)
+wordpress  | MariaDB est prêt !
+wordpress  | Downloading WordPress 6.9.4 (en_US)...
+wordpress  | Using cached file '/root/.wp-cli/cache/core/wordpress-6.9.4-en_US.tar.gz'...
+^C
+make: *** [Makefile:55: logs] Error 130
+
+j'ai fait un makefile comme ca :
+NAME = inception
+
+
+.DEFAULT_GOAL := all
+
+
+
+# Docker Compose
+ENV_FILE = ./srcs/.env
+COMPOSE_FILE = ./srcs/docker-compose.yml
+DOCKER_COMPOSE = docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
+
+
+COMPOSE = docker compose -f srcs/docker-compose.yml
+
+
+LOGIN ?= $(shell id -un)
+DATA_DIR = /home/$(LOGIN)/data
+
+
+prepare:
+    @mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
+
+
+all: up
+
+
+build: prepare
+    @echo "$(GREEN)Building containers...$(RESET)"
+    $(DOCKER_COMPOSE) build
+
+
+
+up: build
+    $(DOCKER_COMPOSE) up -d
+
+
+#   ca arrete les conteneurs sans les supprimer
+stop:
+    $(COMPOSE) stop
+
+
+#   redemarre des conteneurs deje existants qui sont arretes
+#   attention : ca ne rebuild pas, ne recre pas, ca relance juste ce qui existe deja
+start:
+    $(COMPOSE) start
+
+
+
+restart: stop start
+
+
+
+clean: down
+    @echo "$(RED)Removing containers, networks, and volumes...$(RESET)"
+    $(DOCKER_COMPOSE) down -v --rmi all --remove-orphans
+
+
+
+fclean: clean
+    @echo "$(RED)Removing all Docker resources...$(RESET)"
+    @docker system prune -a -f --volumes
+
+
+
+re: fclean all
+
+
+logs:
+    $(DOCKER_COMPOSE) logs -f
+
+
+ps:
+    $(DOCKER_COMPOSE) ps
+
+
+config:
+    $(DOCKER_COMPOSE) config
+
+
+status: ps
+
+
+.PHONY: all prepare build up down stop start restart clean fclean re logs ps config status
+
+
+ensuite mon 50 server.cnf est comem ca :
+
+[mysqld]
+
+user                = mysql
+pid-file            = /run/mysqld/mysqld.pid
+socket              = /run/mysqld/mysqld.sock
+port                = 3306
+basedir             = /usr
+datadir             = /var/lib/mysql
+bind-address        = 0.0.0.0
+character-set-server = utf8mb4
+collation-server    = utf8mb4_general_ci
+
+
+mon script de mariadb est comm eca :
+#!/bin/bash
+set -eu
+
+
+# Récupération des mots de passe
+export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
+export MYSQL_ROOT_PASSWORD="$(cat /run/secrets/db_root_password)"
+
+
+mkdir -p /run/mysqld
+chown -R mysql:mysql /run/mysqld /var/lib/mysql
+
+
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
+
+
+    # Démarrage temporaire
+    mysqld --user=mysql --skip-networking --socket=/run/mysqld/mysqld.sock &
+    MYSQL_PID=$!
+
+
+    until mysqladmin --socket=/run/mysqld/mysqld.sock ping --silent; do
+        sleep 1
+    done
+
+
+    # Commandes SQL
+    # Note : On utilise 'root'@'%' pour s'assurer que même root peut administrer à distance si besoin
+    mysql --protocol=socket --socket=/run/mysqld/mysqld.sock -u root << EOF
+FLUSH PRIVILEGES;
+DELETE FROM mysql.user WHERE User='';
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+
+
+CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
+
+
+-- Sécurisation du root et accès distant si nécessaire
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+-- Optionnel : permettre à root de se connecter depuis le réseau (utile pour le debug)
+CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+
+
+FLUSH PRIVILEGES;
+EOF
+
+
+    # Arrêt propre
+    mysqladmin --protocol=socket --socket=/run/mysqld/mysqld.sock -u root -p"${MYSQL_ROOT_PASSWORD}" shutdown
+    wait $MYSQL_PID
+fi
+
+
+# Lancement final (le 50-server.cnf gère le bind-address=0.0.0.0)
+exec mysqld --user=mysql
+
+mon docker file de mariadb est comme ca :
+# bullseye = debian version 11
+FROM debian:bullseye
+
+
+RUN apt-get update \
+    && apt-get install -y mariadb-server \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /run/mysqld /var/lib/mysql
+
+
+COPY tools/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY tools/script.sh /usr/local/bin/script.sh
+
+
+RUN chmod +x /usr/local/bin/script.sh
+
+
+EXPOSE 3306
+
+
+ENTRYPOINT ["/usr/local/bin/script.sh"]
+
+mon dockerfile de nginx:
+
+FROM debian:bullseye
+
+
+RUN apt-get update \
+    && apt-get install -y nginx openssl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /etc/nginx/ssl /var/run/nginx
+
+
+COPY tools/nginx.conf /etc/nginx/nginx.conf
+COPY tools/script.sh /usr/local/bin/script.sh
+
+
+RUN chmod +x /usr/local/bin/script.sh
+
+
+EXPOSE 443
+
+
+ENTRYPOINT ["/usr/local/bin/script.sh"]
+
+
+mon nginx.conf :
+user www-data;
+
+
+# nb de processus de travail a lancer -> depend donc auto
+worker_processes auto;
+
+
+# chaque processus worker pourra gerer jusqu’a 1024 connexions en meme temps
+events {
+    worker_connections 1024;
+}
+
+
+http {
+
+
+    # on charge la liste des types MIME (poru connaitre le type du fichier css, html...)
+
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+
+    # pour ameliorer l’envoi des fichiers statiques
+    sendfile on;
+
+
+    # une connexion est gardee ouverte pendant 65 sec
+    keepalive_timeout 65;
+
+
+    # on definit un serveur web précis, ici https
+    server {
+
+
+        # NGINX ecoute sur port 443 en SSL/TLS en IPv4 (donc les visiteurs arrivent en https)
+        listen 443 ssl;
+
+
+        # pareil mais en IPv6
+        listen [::]:443 ssl;
+
+
+        #nom de dommaine attendu (ex login.42.fr)
+        server_name ${DOMAIN_NAME};
+
+
+        # on autorise seulement TLS 1.2 et TLS 1.3
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_certificate /etc/nginx/ssl/inception.crt;
+        ssl_certificate_key /etc/nginx/ssl/inception.key;
+
+
+        #on va chercher les fichiers du site dans ce dossier (endroit ou il y a le volume WP)
+        root /var/www/html;
+        index index.php index.html index.htm;
+
+
+        # NGINX va chercher si le chemin est correxct, et envoie vers un vrai fichier
+        # si oui il sert le fichier a wordpress (ou a PHP-FPM si le dossier cmprend un index.php)
+        #si non il check si le dossier existe
+        # si rien n'existe : renvoie interne vers /index.php?$args ==> c'est a WP d'interpreter tout seul
+        location / {
+            try_files $uri $uri/ /index.php?$args;
+        }
+
+
+        location ~ \.php$ {
+
+
+            # charge les parametres FastCGI standards
+            include /etc/nginx/fastcgi_params;
+
+
+            # fait pour que les fichier .php soient envoye au service Wordpress sur le port 9000 
+            fastcgi_pass wordpress:9000;
+
+
+            # indique a PHP-FPM quel fichier PHP exact doit être execute
+            # ex : si root = /var/www/html et qu’on demande /index.php  ==> /var/www/html/index.php
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+        }
+
+
+        # bloque l’acces aux fichiers qui commencent par .ht
+        location ~ /\.ht {
+            deny all;
+        }
+    }
+}
+
+
+mon script de nginx :
+
+#!/bin/bash
+set -e
+
+
+#   on cree le dossier pour stocker le certificat SSL s'il n'existe pas encore.
+mkdir -p /etc/nginx/ssl
+
+
+#   on genere un certificat SSL autosigne (-x509) , valable 365 jours avec une cle RSA 2048 bits
+#   Certificat SSL ->  chiffrer la connexion navigateur <=> serveur
+#   NGINX utilise la cle privée (inception.key) et le certificat (inception.crt) pr activer le https
+#   securise l’acces a NGINX sur le port 443
+
+
+openssl req -x509 -nodes -days 365 \
+    -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/inception.key \
+    -out /etc/nginx/ssl/inception.crt \
+    -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=${DOMAIN_NAME}"
+
+
+#   on demarre nginx comme processus principal,(PID 1)
+#   "daemon off" = pas en arriere plan 
+#   on remplace remplace ${DOMAIN_NAME} par le vrai nom de domaine car NGINX ne le remplace pas tout seul
+
+
+sed "s|\${DOMAIN_NAME}|${DOMAIN_NAME}|g" /etc/nginx/nginx.conf > /tmp/nginx.conf
+exec nginx -c /tmp/nginx.conf -g "daemon off;"
+
+
+mon wordpress dockerfile :
+
+FROM debian:bullseye
+
+
+RUN apt-get update \
+    && apt-get install -y \
+        php7.4-fpm \
+        php7.4-mysql \
+        php7.4-gd \
+        php7.4-curl \
+        php7.4-mbstring \
+        php7.4-xml \
+        php7.4-zip \
+        curl \
+        mariadb-client \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /run/php /var/www/html
+
+
+COPY tools/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY tools/script.sh /usr/local/bin/script.sh
+
+
+# donne des drit specifiques
+RUN chmod +x /usr/local/bin/script.sh \
+    && chown -R www-data:www-data /var/www/html
+
+
+EXPOSE 9000
+
+
+ENTRYPOINT ["/usr/local/bin/script.sh"]
+
+mon script wordpress :
+
+#!/bin/bash
+set -eu
+
+
+#on recuper les mdp
+export MYSQL_PASSWORD="$(cat /run/secrets/db_password)"
+export WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
+export WP_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
+
+
+# dossier où seront stockes les fichiers runtime de PHP-FPM(php) puis WordPress (html)
+mkdir -p /run/php
+mkdir -p /var/www/html
+
+
+
+# telecharger WP-CLI que si il n'existe pas deja dans le conteneur
+# WP-CLI = WordPress Command Line Interface --> outil pr piloter WordPress via terminal au lieu de passer par l’interface web d’administration
+if [ ! -f /usr/local/bin/wp ]; then
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    mv wp-cli.phar /usr/local/bin/wp
+fi
+
+
+cd /var/www/html
+
+
+# ÉTAPE CRUCIALE : Attendre que MariaDB soit prêt ET accepte l'utilisateur
+# On redirige les erreurs vers /dev/null pour ne pas polluer les logs avec l'erreur 1130 pendant l'attente
+echo "Attente de MariaDB (${MYSQL_HOST})..."
+until mysqladmin ping -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" --silent > /dev/null 2>&1; do
+    sleep 2
+done
+echo "MariaDB est prêt !"
+
+
+# si premier lancement --> on installe et configure Wordpress
+if [ ! -f /var/www/html/wp-config.php ]; then
+
+
+    # on y telecharge les fichiers du coeur WordPress
+    wp core download --allow-root --force
+
+
+    # on cree le fichier ​qui contient les infos de connexion a la base de donnees
+    wp config create \
+        --allow-root \
+        --dbname="${MYSQL_DATABASE}" \
+        --dbuser="${MYSQL_USER}" \
+        --dbpass="${MYSQL_PASSWORD}" \
+        --dbhost="${MYSQL_HOST}" \
+        --path='/var/www/html'
+
+
+    # installation du site WP
+    wp core install \
+        --allow-root \
+        --url="${DOMAIN_NAME}" \
+        --title="${WP_TITLE}" \
+        --admin_user="${WP_ADMIN_USER}" \
+        --admin_password="${WP_ADMIN_PASSWORD}" \
+        --admin_email="${WP_ADMIN_EMAIL}" \
+        --skip-email
+
+
+    # creation du second utilisateur ( comme demande dans le sujet), on lui donne le role d'auteur
+    wp user create "${WP_USER}" "${WP_USER_EMAIL}" \
+        --allow-root \
+        --user_pass="${WP_USER_PASSWORD}" \
+        --role=author
+
+
+    # chown pour changer le propriétaire et/ou le groupe
+    chown -R www-data:www-data /var/www/html
+fi
+
+
+echo "WordPress est prêt à servir des requêtes."
+
+
+# lance PHP-FPM en avant-plan
+exec /usr/sbin/php-fpm7.4 -F
+
+
+mon www.conf 
+
+[www]
+
+
+user = www-data
+group = www-data
+
+
+listen = 0.0.0.0:9000
+
+
+listen.owner = www-data
+listen.group = www-data
+
+
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+
+
+clear_env = no
+
+
+catch_workers_output = yes
+
+
+security.limit_extensions = .php
+
+
+mon .env :
+MYSQL_HOST=mariadb
+MYSQL_DATABASE=wordpress
+MYSQL_USER=wpuser
+
+
+DOMAIN_NAME=camerico.42.fr
+WP_TITLE=Inception
+WP_ADMIN_USER=supervisor
+WP_ADMIN_EMAIL=admin@example.com
+
+
+# 2eme user
+WP_USER=user42
+WP_USER_EMAIL=user42@example.com
+
+
+mon dockercompose :
+
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    image: mariadb:42
+    container_name: mariadb
+    env_file: .env
+    secrets:
+      - db_password
+      - db_root_password
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - inception
+    restart: unless-stopped
+
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress:42
+    container_name: wordpress
+    env_file: .env
+    depends_on:
+      - mariadb
+    secrets:
+      - db_password
+      - wp_admin_password
+      - wp_user_password
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    restart: unless-stopped
+
+
+  nginx:
+    build: ./requirements/nginx
+    image: nginx:42
+    container_name: nginx
+    env_file: .env
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    restart: unless-stopped
+
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/camerico/data/db
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/camerico/data/wordpress
+
+
+networks:
+  inception:
+    driver: bridge
+
+
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
+
+
+analyse les fichiers, et ensuite j'essayerait de te partage ce qu'a fait unami pour que tu compare les deux avec une version qui fonctionne et me toruve l'erreur

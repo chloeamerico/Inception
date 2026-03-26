@@ -24,7 +24,7 @@ cd /var/www/html
 # ÉTAPE CRUCIALE : Attendre que MariaDB soit prêt ET accepte l'utilisateur
 # On redirige les erreurs vers /dev/null pour ne pas polluer les logs avec l'erreur 1130 pendant l'attente
 echo "Attente de MariaDB (${MYSQL_HOST})..."
-until mysqladmin ping -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" --silent > /dev/null 2>&1; do
+until mysql -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1;" > /dev/null 2>&1; do
     sleep 2
 done
 echo "MariaDB est prêt !"

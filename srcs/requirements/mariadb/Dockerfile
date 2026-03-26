@@ -5,7 +5,8 @@ RUN apt-get update \
     && apt-get install -y mariadb-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /run/mysqld /var/lib/mysql
+    && mkdir -p /run/mysqld /var/lib/mysql \
+    && rm -rf /var/lib/mysql/*
 
 COPY tools/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY tools/script.sh /usr/local/bin/script.sh
