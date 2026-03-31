@@ -23,7 +23,7 @@ build: prepare
 	$(DOCKER_COMPOSE) build
 
 
-up: build
+up:	build
 	$(DOCKER_COMPOSE) up -d
 
 #	ca arrete les conteneurs sans les supprimer
