@@ -30,6 +30,7 @@ services:
       - inception
     restart: unless-stopped
 
+# nginx qui ecoute sur le port 443 est le seul port accessible depuis l'exterieur  
   nginx:
     build: ./requirements/nginx
     image: nginx:42
@@ -59,6 +60,7 @@ volumes:
       o: bind
       device: /home/camerico/data/wordpress
 
+# on cree le reseau Docker appele inception, pour que chaque conteneru puisse ensuite s'y connecter
 networks:
   inception:
     driver: bridge
