@@ -46,8 +46,8 @@ clean: down
 
 fclean: clean
 	@docker system prune -a -f --volumes
-	@sudo rm -rf $(DATA_DIR)/db $(DATA_DIR)/wordpress
-	@mkdir -p $(DATA_DIR)/db $(DATA_DIR)/wordpress
+# @sudo rm -rf $(DATA_DIR)/db $(DATA_DIR)/wordpress
+# @mkdir -p $(DATA_DIR)/db $(DATA_DIR)/wordpress
 
 down:
 	$(DOCKER_COMPOSE) down
