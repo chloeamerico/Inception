@@ -67,4 +67,4 @@ fi
 echo "WordPress est prêt à servir des requêtes."
 
 # lance PHP-FPM en avant-plan
-exec /usr/sbin/php-fpm7.4 -F
+exec /usr/sbin/php-fpm8.2 -F
