@@ -6,7 +6,7 @@ srcs/secrets/
 srcs/.env
 .env
 
-# Données des volumes (générées au runtime)
+# Donnees des volumes (générées au runtime)
 /home/*/data/
 
 # Fichiers système macOS
